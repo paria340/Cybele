@@ -1,38 +1,129 @@
-.App {
+html {
+  font-size: 16px;
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  font-size: 4rem;
+  color: #22223B;
+}
+
+h2 {
+  font-family: 'Cormorant', serif;
+  font-weight: 400;
+  font-size: 3rem;
+  color: #22223B;
+}
+
+h3 {
+  font-family: 'Cormorant', serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #22223B;
+}
+
+p {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.08rem;
+  color: #22223B;
+}
+
+li {
+  list-style: none;
+  color: #22223B;
+}
+
+a {
+  text-decoration: none;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #22223B;
+  transition: color 0.3s ease;
+}
+
+a:hover,
+a:focus {
+  color: #9A8C98;
+}
+
+button {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  padding: 0.7rem;
+  color: #22223B;
+  background-color:#fdfbfa ;
+  border: #22223B 1px solid;
+  border-radius: 5%;
+  transition: all 0.5s ease;
+}
+
+button:hover,
+button:focus {
+  color: #f8f2ef;
+  background-color:#9A8C98 ;
+  border: white 1px solid;
+  cursor:pointer;
+}
+
+/* Top menu */
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+ul {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  /* background-color: #D2BBA0; */
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+Footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   text-align: center;
+  /* background-color: #D2BBA0; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sign up page */
+.signupContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.defaultInput {
+  max-width: 300px;
+  border: 2px solid grey;
+  padding: 7px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.defaultButton {
+  border: none;
+  padding: 8px 16px;
+  background-color: #D2BBA0;
+  width: fit-content;
+}
+
+.formOptions {
+  display: flex;
 }
