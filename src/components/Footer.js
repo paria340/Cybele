@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <footer className="wrapper">
+    <footer className="wrapper footer">
       <p>Made by MyCybele</p>
     </footer>
   );

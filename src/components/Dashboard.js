@@ -1,18 +1,23 @@
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Dashboard = () => {
+  const location = useLocation();
+  const { message, tips, trainingPlan } = location.state;
+
   return (
-      <main>
-          <div className="headerContainer">
-              <section className="header">
-                  <h1>Start your Run-Prep today!</h1>
-              </section>
-              <section className="distanceOptions">
-                
-              </section>
-          </div>
-      </main>
-  )
-}
+    <div>
+      <h2>{message}</h2>
+      <h3>Training Tips:</h3>
+      {/* <ul>
+        {tips.map((tip, index) => (
+          <li key={index}>{tip}</li>
+        ))}
+      </ul> */}
+      <h3>Training Plan:</h3>
+      <p>{trainingPlan}</p>
+    </div>
+  );
+};
 
-export default Dashboard
-
+export default Dashboard;

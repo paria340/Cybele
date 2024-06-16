@@ -1,5 +1,6 @@
 html {
   font-size: 16px;
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 .wrapper {
@@ -8,28 +9,25 @@ html {
 }
 
 h1 {
-  font-family: 'Cormorant', serif;
   font-weight: 500;
   font-size: 4rem;
   color: #22223B;
+  font-family: 'Cormorant', serif;
 }
 
 h2 {
-  font-family: 'Cormorant', serif;
   font-weight: 400;
   font-size: 3rem;
   color: #22223B;
 }
 
 h3 {
-  font-family: 'Cormorant', serif;
   font-weight: 300;
   font-size: 1.5rem;
   color: #22223B;
 }
 
 p {
-  font-family: 'Hind Siliguri', sans-serif;
   font-weight: 400;
   font-size: 1.2rem;
   letter-spacing: 0.08rem;
@@ -43,7 +41,6 @@ li {
 
 a {
   text-decoration: none;
-  font-family: 'Hind Siliguri', sans-serif;
   font-weight: 400;
   font-size: 1.2rem;
   color: #22223B;
@@ -63,15 +60,12 @@ button {
   color: #22223B;
   background-color:#fdfbfa ;
   border: #22223B 1px solid;
-  border-radius: 5%;
   transition: all 0.5s ease;
 }
 
 button:hover,
 button:focus {
-  color: #f8f2ef;
-  background-color:#9A8C98 ;
-  border: white 1px solid;
+  background-color:#89CFF0;
   cursor:pointer;
 }
 
@@ -91,17 +85,14 @@ ul {
 .header {
   display: flex;
   justify-content: center;
-  /* background-color: #D2BBA0; */
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-Footer {
-  position: absolute;
-  bottom: 0;
+.footer {
+  margin-top: 100px;
   width: 100%;
   text-align: center;
-  /* background-color: #D2BBA0; */
 }
 
 /* Sign up page */
@@ -124,6 +115,43 @@ Footer {
   width: fit-content;
 }
 
-.formOptions {
+.formOptions form {
   display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+form {
+  input {
+    margin: 5px 0 15px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  select {
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .selectWrapper {
+    position: relative;
+  }
+
+  .distance {
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 100%;
+    margin: 5px 0 15px 0;
+  }
+
+  .selectWrapper i {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
 }
