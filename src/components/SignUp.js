@@ -11,22 +11,7 @@ const OnBoarding = () => {
   const formData = useSelector((state) => state.form);
 
   const handleInputChange = (event) => {
-    dispatch(updateForm({ name: event.target.value }));
-  };
-
-  const handleDateChange = (event) => {
-    dispatch(updateForm({ dob: event.target.value }));
-  };
-
-  const handleDistanceChange = (event) => {
-    dispatch(updateForm({ distance: event.target.value }));
-  };
-
-  const handleTimeGoalChange = (event) => {
-    const value = event.target.value;
-    if (/^\d{0,2}:?\d{0,2}$/.test(value)) {
-      dispatch(updateForm({ timeGoal: value }));
-    }
+    dispatch(updateForm({ [event.target.id]: event.target.value }));
   };
 
   const handleContinue = (event) => {
@@ -34,62 +19,83 @@ const OnBoarding = () => {
     setStep(step + 1);
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission
     try {
-      const response = await axios.post('http://localhost:2000/api/users', formData);
-      console.log(response.data);
+      const response = await axios.post('http://localhost:2000/api/signup', formData);
       navigate('/dashboard', { state: response.data });
-    } catch (_error) {
-      console.error('Error creating user');
+    } catch (error) {
+      console.error('Error creating user:', error);
     }
   };
+
   return (
     <main>
-      <div className="headerContainer">
+      <div>
         <section className="header">
-            <h1>Start your Run-Prep today!</h1>
+          <h1>Start your Run-Prep today!</h1>
         </section>
         <section className="formOptions">
           {step === 1 && (
             <form>
               <label>Your Name</label>
-              <input 
-                type="text" 
-                id="name" 
-                value={formData.name} 
-                className="name" 
-                size={15} 
+              <input
+                type="text"
+                id="name"
+                value={formData.name}
+                className="name"
+                size={15}
                 onChange={handleInputChange}
-                placeholder="Your name" 
+                placeholder="Your name"
                 required
-              >
-              </input>
+              />
               <label>Your Date of Birth</label>
-              <input 
-                type="date" 
-                id="dob" 
-                value={formData.dob} 
-                className="dob" 
-                size={15} 
-                onChange={handleDateChange}
-                placeholder="YYYY-MM-DD" 
+              <input
+                type="date"
+                id="dob"
+                value={formData.dob}
+                className="dob"
+                size={15}
+                onChange={handleInputChange}
+                placeholder="YYYY-MM-DD"
                 required
-              >
-              </input>
+              />
+              <label>Your Email</label>
+              <input
+                type="email"
+                id="email"
+                value={formData.email}
+                className="email"
+                size={15}
+                onChange={handleInputChange}
+                placeholder="Your email"
+                autoComplete="email"
+                required
+              />
+              <label>Your Password</label>
+              <input
+                type="password"
+                id="password"
+                value={formData.password}
+                className="password"
+                size={15}
+                onChange={handleInputChange}
+                autoComplete="current-password"
+                placeholder="Your password"
+                required
+              />
               <button onClick={handleContinue}>Continue</button>
             </form>
           )}
           {step === 2 && (
             <form onSubmit={handleSubmit}>
               <label>What distance are you prepping for</label>
-              <div className='selectWrapper'>
+              <div className="selectWrapper">
                 <select
                   id="distance"
                   value={formData.distance}
                   className="distance"
-                  onChange={handleDistanceChange}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="" disabled>Select distance</option>
@@ -107,7 +113,7 @@ const OnBoarding = () => {
                 value={formData.timeGoal}
                 className="timeGoal"
                 pattern="^\d{1,2}:\d{2}$"
-                onChange={handleTimeGoalChange}
+                onChange={handleInputChange}
                 placeholder="MM:SS"
                 required
               />
@@ -117,7 +123,7 @@ const OnBoarding = () => {
         </section>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default OnBoarding
+export default OnBoarding;

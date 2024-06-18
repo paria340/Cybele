@@ -7,7 +7,9 @@ const formSlice = createSlice({
     name: '',
     dob: '',
     distance: '',
-    timeGoal: ''
+    timeGoal: '',
+    email: '',
+    password: '',
   },
   reducers: {
     updateForm: (state, action) => {

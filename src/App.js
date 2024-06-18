@@ -1,7 +1,8 @@
 import MainNav from './components/MainNav';
 import Footer from "./components/Footer";
-import OnBoarding from './components/OnBoarding';
+import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 import {BrowserRouter as Router} from "react-router-dom";
 import {Routes, Route} from "react-router-dom";
 import './App.css';
@@ -15,8 +16,9 @@ function App() {
           <MainNav />
         </header>
         <Routes>
-          <Route path="/*" element={<OnBoarding />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
         </Routes>
         <Footer />
       </div>

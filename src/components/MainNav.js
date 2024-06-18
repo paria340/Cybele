@@ -9,11 +9,14 @@ const MainNav = () => {
       <ul className="wrapper">
         <nav>
           <ul className="left">
-            {/* <li>
-              <a href="/">Menu</a>
-            </li> */}
             <li>
-              <a href="/dashboard">Dashboard</a>
+              <a href="/">Dashboard</a>
+            </li>
+            <li>
+              <a href="/signUp">Sign up</a>
+            </li>
+            <li>
+              <a href="/login">Login</a>
             </li>
           </ul>
         </nav>
