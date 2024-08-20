@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Dashboard = () => {
-  // const location = useLocation();
-  // const { message, tips, trainingPlan } = location.state;
+  const location = useLocation();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // Replace with the actual user ID from your authentication system
+        const userId = location.state.user._id;
+        const response = await axios.get(`http://localhost:2000/api/users/${userId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [location.state.user._id]);
 
   return (
     <div>

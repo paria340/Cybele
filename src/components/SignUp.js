@@ -23,7 +23,7 @@ const OnBoarding = () => {
     event.preventDefault();
     try {
       const response = await axios.post('http://localhost:2000/api/signup', formData);
-      navigate('/dashboard', { state: response.data });
+      navigate('/', { state: response.data });
     } catch (error) {
       console.error('Error creating user:', error);
     }
