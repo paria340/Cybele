@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkBox, setCheckbox] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -15,6 +16,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
       navigate('/', { state: response.data });
     } catch (error) {
+      setErrorMessage('Error logging In');
       console.error('Error logging in:', error);
     }
   };
@@ -67,7 +69,11 @@ const Login = () => {
           <a href="/forgotPassword" style={styles.link}>
             Forgot Password?
           </a>
+
         </div>
+          {errorMessage && (
+            <div style={styles.errorMessage}>{errorMessage}</div>
+          )}
           <button style={styles.btnDefault} type="submit">Login</button>
         </form>
       </div>
@@ -83,11 +89,20 @@ const styles = {
     width: '100%',
     height: '70vh',
   },
+  errorMessage: {
+    color: 'red',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    textAlign: 'left', 
+    margin: '10px auto 0 auto',
+  },
   formOption: {
     display: 'flex',
     flexDirection: 'column',
     width: '400px',
     margin: '0 auto',
+    border: '1px solid black',
+    padding: '60px 30px',
   },
   container: {
     width: '400px',
@@ -122,8 +137,10 @@ const styles = {
     padding: '10px',
     borderRadius: '5px',
     fontSize: '16px',
+    border: '1px solid black',
   },
   btnDefault: {
+    marginTop: '20px',
     width: '400px',
   }
 };

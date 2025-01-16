@@ -35,10 +35,9 @@ const OnBoarding = () => {
         <section className="header">
           <h1>Start your Run-Prep today!</h1>
         </section>
-        <section className="formOptions">
+        <section>
           {step === 1 && (
-            <form>
-              <label>Your Name</label>
+            <form style={styles.formOption}>
               <input
                 type="text"
                 id="name"
@@ -48,8 +47,8 @@ const OnBoarding = () => {
                 onChange={handleInputChange}
                 placeholder="Your name"
                 required
+                style={styles.input}
               />
-              <label>Your Date of Birth</label>
               <input
                 type="date"
                 id="dob"
@@ -59,8 +58,8 @@ const OnBoarding = () => {
                 onChange={handleInputChange}
                 placeholder="YYYY-MM-DD"
                 required
+                style={styles.input}
               />
-              <label>Your Email</label>
               <input
                 type="email"
                 id="email"
@@ -71,8 +70,8 @@ const OnBoarding = () => {
                 placeholder="Your email"
                 autoComplete="email"
                 required
+                style={styles.input}
               />
-              <label>Your Password</label>
               <input
                 type="password"
                 id="password"
@@ -83,12 +82,13 @@ const OnBoarding = () => {
                 autoComplete="current-password"
                 placeholder="Your password"
                 required
+                style={styles.input}
               />
               <button onClick={handleContinue}>Continue</button>
             </form>
           )}
           {step === 2 && (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={styles.formOption}>
               <label>What distance are you prepping for</label>
               <div className="selectWrapper">
                 <select
@@ -116,6 +116,7 @@ const OnBoarding = () => {
                 onChange={handleInputChange}
                 placeholder="MM:SS"
                 required
+                style={styles.input}
               />
               <button type="submit">Submit</button>
             </form>
@@ -124,6 +125,70 @@ const OnBoarding = () => {
       </div>
     </main>
   );
+};
+
+const styles = {
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '100%',
+    height: '70vh',
+  },
+  errorMessage: {
+    color: 'red',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    textAlign: 'left', 
+    margin: '10px auto 0 auto',
+  },
+  formOption: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '400px',
+    margin: '0 auto',
+    border: '1px solid black',
+    padding: '60px 30px',
+  },
+  container: {
+    width: '400px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  inputGroup: {
+    display: 'flex',
+    gap: '5px',
+  },
+  checkbox: {
+    cursor: 'pointer',
+  },
+  label: {
+    fontSize: '14px',
+    color: '#333',
+    cursor: 'pointer',
+    paddingTop: '2px',
+  },
+  title: {
+    fontSize: '32px',
+  },
+  link: {
+    fontSize: '14px',
+    color: '#007BFF',
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
+  input: {
+    margin: '5px 0 15px 0',
+    padding: '10px',
+    borderRadius: '5px',
+    fontSize: '16px',
+    border: '1px solid black',
+  },
+  btnDefault: {
+    marginTop: '20px',
+    width: '400px',
+  }
 };
 
 export default OnBoarding;
