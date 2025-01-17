@@ -9,6 +9,7 @@ const OnBoarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.form);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (event) => {
     dispatch(updateForm({ [event.target.id]: event.target.value }));
@@ -25,6 +26,7 @@ const OnBoarding = () => {
       const response = await axios.post('http://localhost:2000/api/signup', formData);
       navigate('/', { state: response.data });
     } catch (error) {
+      setErrorMessage('Error Signing Up');
       console.error('Error creating user:', error);
     }
   };
@@ -118,6 +120,9 @@ const OnBoarding = () => {
                 required
                 style={styles.input}
               />
+              {errorMessage && (
+                <div style={styles.errorMessage}>{errorMessage}</div>
+              )}
               <button type="submit">Submit</button>
             </form>
           )}
@@ -140,7 +145,7 @@ const styles = {
     fontSize: '14px',
     fontWeight: 'bold',
     textAlign: 'left', 
-    margin: '10px auto 0 auto',
+    margin:'0 auto 10px auto',
   },
   formOption: {
     display: 'flex',
