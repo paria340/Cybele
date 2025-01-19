@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 const OnBoarding = () => {
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
 
   const handleInputChange = (event) => {
-    dispatch(updateForm({ [event.target.id]: event.target.value }));
+    const { id, value } = event.target;
+    dispatch(updateForm({ [id]: value }));
   };
 
   const handleContinue = (event) => {
@@ -25,104 +27,99 @@ const OnBoarding = () => {
       const response = await axios.post('http://localhost:2000/api/signup', formData);
       navigate('/', { state: response.data });
     } catch (error) {
+      setErrorMessage('Error Signing Up');
       console.error('Error creating user:', error);
     }
   };
 
   return (
-    <main>
-      <div>
-        <section className="header">
-          <h1>Start your Run-Prep today!</h1>
-        </section>
-        <section>
-          {step === 1 && (
-            <form style={styles.formOption}>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                className="name"
-                size={15}
-                onChange={handleInputChange}
-                placeholder="Your name"
-                required
-                style={styles.input}
-              />
-              <input
-                type="date"
-                id="dob"
-                value={formData.dob}
-                className="dob"
-                size={15}
-                onChange={handleInputChange}
-                placeholder="YYYY-MM-DD"
-                required
-                style={styles.input}
-              />
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                className="email"
-                size={15}
-                onChange={handleInputChange}
-                placeholder="Your email"
-                autoComplete="email"
-                required
-                style={styles.input}
-              />
-              <input
-                type="password"
-                id="password"
-                value={formData.password}
-                className="password"
-                size={15}
-                onChange={handleInputChange}
-                autoComplete="current-password"
-                placeholder="Your password"
-                required
-                style={styles.input}
-              />
-              <button onClick={handleContinue}>Continue</button>
-            </form>
-          )}
-          {step === 2 && (
-            <form onSubmit={handleSubmit} style={styles.formOption}>
-              <label>What distance are you prepping for</label>
-              <div className="selectWrapper">
-                <select
-                  id="distance"
-                  value={formData.distance}
-                  className="distance"
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="" disabled>Select distance</option>
-                  <option value="5k">5k</option>
-                  <option value="10k">10k</option>
-                  <option value="half-marathon">Half-Marathon</option>
-                  <option value="marathon">Full-Marathon</option>
-                </select>
-                <i className="fas fa-chevron-down"></i>
-              </div>
-              <label>Preferred Running Time Goal</label>
-              <input
-                type="text"
-                id="timeGoal"
-                value={formData.timeGoal}
-                className="timeGoal"
-                pattern="^\d{1,2}:\d{2}$"
-                onChange={handleInputChange}
-                placeholder="MM:SS"
-                required
-                style={styles.input}
-              />
-              <button type="submit">Submit</button>
-            </form>
-          )}
-        </section>
-      </div>
+    <main style={styles.wrapper}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>Start Your Run-Prep Today!</h1>
+      </header>
+      <section>
+        {step === 1 && (
+          <form style={styles.form} onSubmit={handleContinue}>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              placeholder="Your Name"
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="date"
+              id="dob"
+              value={formData.dob}
+              placeholder="YYYY-MM-DD"
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              placeholder="Your Email"
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="password"
+              id="password"
+              value={formData.password}
+              placeholder="Your Password"
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+            <button style={styles.button} type="submit">
+              Continue
+            </button>
+          </form>
+        )}
+        {step === 2 && (
+          <form style={styles.form} onSubmit={handleSubmit}>
+            <label htmlFor="distance" style={styles.label}>
+              What distance are you prepping for?
+            </label>
+            <select
+              id="distance"
+              value={formData.distance}
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>
+                Select Distance
+              </option>
+              <option value="5k">5k</option>
+              <option value="10k">10k</option>
+              <option value="half-marathon">Half-Marathon</option>
+              <option value="marathon">Full-Marathon</option>
+            </select>
+            <label htmlFor="timeGoal" style={styles.label}>
+              Preferred Running Time Goal
+            </label>
+            <input
+              type="text"
+              id="timeGoal"
+              value={formData.timeGoal}
+              placeholder="MM:SS"
+              style={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+            {errorMessage && <p style={styles.error}>{errorMessage}</p>}
+            <button style={styles.button} type="submit">
+              Submit
+            </button>
+          </form>
+        )}
+      </section>
     </main>
   );
 };
@@ -131,64 +128,56 @@ const styles = {
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    width: '100%',
-    height: '70vh',
-  },
-  errorMessage: {
-    color: 'red',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    textAlign: 'left', 
-    margin: '10px auto 0 auto',
-  },
-  formOption: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '400px',
-    margin: '0 auto',
-    border: '1px solid black',
-    padding: '60px 30px',
-  },
-  container: {
-    width: '400px',
-    display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    padding: '20px',
+    backgroundColor: '#f9f9f9',
+    minHeight: '100vh',
   },
-  inputGroup: {
-    display: 'flex',
-    gap: '5px',
+  header: {
+    marginBottom: '20px',
   },
-  checkbox: {
+  title: {
+    fontSize: '28px',
+    color: '#333',
+    textAlign: 'center',
+  },
+  form: {
+    backgroundColor: '#fff',
+    padding: '30px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '400px',
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    marginBottom: '15px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '16px',
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    color: '#fff',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
     cursor: 'pointer',
+    fontSize: '16px',
+    width: '100%',
   },
   label: {
     fontSize: '14px',
-    color: '#333',
-    cursor: 'pointer',
-    paddingTop: '2px',
+    color: '#555',
+    marginBottom: '5px',
+    display: 'block',
   },
-  title: {
-    fontSize: '32px',
-  },
-  link: {
+  error: {
+    color: '#ff4d4f',
     fontSize: '14px',
-    color: '#007BFF',
-    textDecoration: 'none',
-    cursor: 'pointer',
+    marginBottom: '15px',
   },
-  input: {
-    margin: '5px 0 15px 0',
-    padding: '10px',
-    borderRadius: '5px',
-    fontSize: '16px',
-    border: '1px solid black',
-  },
-  btnDefault: {
-    marginTop: '20px',
-    width: '400px',
-  }
 };
 
 export default OnBoarding;
