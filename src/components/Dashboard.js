@@ -13,7 +13,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userId = location.state.user._id; // Replace with the actual user ID
+        const userId = location.state.user._id;
         const response = await axios.get(`http://localhost:2000/api/users/${userId}`);
         setUserData(response.data);
       } catch (error) {
