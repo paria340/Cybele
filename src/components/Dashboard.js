@@ -9,26 +9,39 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!location.state || !location.state.user?._id) {
+        setError('User ID is missing.');
+        setLoading(false);
+        return;
+      }
+
       try {
         const userId = location.state.user._id;
         const response = await axios.get(`http://localhost:2000/api/users/${userId}`);
         setUserData(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        setError('Failed to load user data. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [location.state.user._id]);
+  }, [location.state]);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
     navigate(`/calendar/${date.toISOString().slice(0, 10)}`);
   };
 
+  if (loading) return <div style={styles.message}>Loading...</div>;
+  if (error) return <div style={styles.message}>{error}</div>;
 
   return (
     <div style={styles.container}>
@@ -47,7 +60,11 @@ const Dashboard = () => {
           <h3 style={styles.sectionTitle}>Training Plan:</h3>
           <div style={styles.trainingPlan}>{userData.trainingPlan}</div>
           <div style={styles.calendarContainer}>
-            <Calendar onClickDay={handleDateClick} value={selectedDate} maxDetail="month" />
+            <Calendar
+              onClickDay={handleDateClick}
+              value={selectedDate}
+              maxDetail="month"
+            />
           </div>
         </>
       )}
@@ -73,6 +90,7 @@ const styles = {
     fontSize: '20px',
     color: '#555',
     marginBottom: '20px',
+    textAlign: 'center',
   },
   sectionTitle: {
     fontSize: '18px',
