@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../redux/actions';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +10,7 @@ const Login = () => {
   const [checkBox, setCheckbox] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -15,6 +18,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:2000/api/login', { email, password });
       localStorage.setItem('token', response.data.token);
       navigate('/', { state: response.data });
+      dispatch(logIn(true));
     } catch (error) {
       setErrorMessage('Error logging In');
       console.error('Error logging in:', error);
